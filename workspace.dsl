@@ -3,8 +3,9 @@ workspace {
     model {
 
         # Actors
-        admin = person "Admin Zero Stress"
+        admin = person "Administrador"
         client = person "Cliente Zero Stress"
+        staff = person "Personal Operativo"
 
         # External Systems
         whatsapp = softwareSystem "WhatsApp" "Plataforma de mensajería (WhatsApp Business API)" "external"
@@ -15,13 +16,16 @@ workspace {
         }
 
         # Relationships
-        admin -> zeroStressSystem "gestiona POS y consulta métricas de Piscina Zero Stress"
-        admin -> whatsapp "consulta métricas de Piscina Zero Stress"
+        admin -> zeroStressSystem "Gestiona POS y consulta métricas de Piscina Zero Stress"
+        admin -> whatsapp "Realiza consultas sobre el negocio"
+        staff -> zeroStressSystem "Opera POS"
 
         zeroStressSystem -> client "Envía comprobantes por email"
         zeroStressSystem -> admin "Envía reportes por email"
         zeroStressSystem -> llm "Analiza información con"
-        whatsapp -> zeroStressSystem "Obtiene análisis"
+        zeroStressSystem -> whatsapp "Envía respuestas/reportes"
+        whatsapp -> zeroStressSystem "Reenvía consultas a través de WhatsApp Business API"
+
     }
 
     views {
